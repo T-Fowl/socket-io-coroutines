@@ -2,16 +2,18 @@
 
 package com.tfowl.io.socket
 
+import app.cash.turbine.test
 import kotlinx.coroutines.*
 import kotlinx.coroutines.test.runBlockingTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
+import kotlin.time.ExperimentalTime
 
 class ExtensionsTests {
 
     @Test
-    fun `connectAwait returns correctly`() = runBlockingTest {
+    fun `connectAwait returns correctly`(): Unit = runBlocking {
         val socketSuccessful = ControlledConnectionSocket(ConnectionOutcome.Success)
 
         val connected = socketSuccessful.connectAwait()
@@ -65,16 +67,39 @@ class ExtensionsTests {
         assertEquals(84, result.await().first())
     }
 
-//    @Test
-//    @OptIn(ExperimentalTime::class)
-//    fun `onFlow removed on cancellations`() = runBlockingTest {
-//        eventTesting("onFlow") {
-//
-//            emitter.onFlow(event)
-//
-//            emitter.emit(event, 1)
-//            emitter.emit(event, 2)
-//            emitter.emit(event, 3)
-//        }
-//    }
+    @Test
+    @OptIn(ExperimentalTime::class)
+    fun `onFlow receives events`() = runBlockingTest {
+        eventTesting("onFlow") {
+
+            launch {
+                emitter.emit(event, 1)
+                emitter.emit(event, 2)
+                emitter.emit(event, 3)
+            }
+            launch {
+                emitter.onFlow(event).test {
+                    assertEquals(1, expectItem().first())
+                    assertEquals(2, expectItem().first())
+                    assertEquals(3, expectItem().first())
+                    cancel()
+                }
+            }
+        }
+    }
+
+    @Test
+    @OptIn(ExperimentalTime::class)
+    fun `onFlow registers and removes listeners`() = runBlockingTest {
+        eventTesting("onFlow") {
+
+            emitter.onFlow(event).test {
+                emitter.assertListening(event)
+
+                cancel()
+            }
+
+            emitter.assertNotListening(event)
+        }
+    }
 }

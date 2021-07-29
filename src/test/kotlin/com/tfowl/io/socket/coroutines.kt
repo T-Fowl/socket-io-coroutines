@@ -2,19 +2,14 @@ package com.tfowl.io.socket
 
 import kotlin.reflect.KClass
 
-internal fun interface SuspendingExecutable {
-
-    @Throws(Throwable::class)
-    suspend fun execute()
-}
 
 internal suspend inline fun <reified T : Throwable> assertThrows(noinline block: suspend () -> Unit): T {
-    return assertThrows(T::class, SuspendingExecutable(block))
+    return assertThrows(T::class, block)
 }
 
-internal suspend fun <T : Throwable> assertThrows(clazz: KClass<T>, executable: SuspendingExecutable): T {
+internal suspend fun <T : Throwable> assertThrows(clazz: KClass<T>, block: suspend () -> Unit): T {
     return try {
-        executable.execute()
+        block()
         throw AssertionError("Expected to throw $clazz")
     } catch (t: Throwable) {
         if (clazz.isInstance(t)) return t as T

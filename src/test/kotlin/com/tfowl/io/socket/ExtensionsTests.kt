@@ -2,31 +2,27 @@
 
 package com.tfowl.io.socket
 
-import io.socket.emitter.Emitter
 import kotlinx.coroutines.*
 import kotlinx.coroutines.test.runBlockingTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-private fun Emitter.assertListening(event: String) {
-    assertTrue(hasListeners(event))
-}
-
-private fun Emitter.assertNotListening(event: String) {
-    assertFalse(hasListeners(event))
-}
-
-private class EventTestingScope(val event: String, val emitter: Emitter = Emitter())
-
-private inline fun eventTesting(event: String, block: EventTestingScope.() -> Unit) {
-    val tester = EventTestingScope(event)
-    tester.emitter.assertNotListening(tester.event) // Sanity
-    tester.block()
-}
-
 class ExtensionsTests {
+
+    @Test
+    fun `connectAwait returns correctly`() = runBlockingTest {
+        val socketSuccessful = ControlledConnectionSocket(ConnectionOutcome.Success)
+
+        val connected = socketSuccessful.connectAwait()
+        assertTrue(connected.connected())
+
+        val socketError = ControlledConnectionSocket(ConnectionOutcome.Error)
+        assertThrows<SocketConnectErrorException> { socketError.connectAwait() }
+
+        val socketTimeout = ControlledConnectionSocket(ConnectionOutcome.Timeout)
+        assertThrows<SocketConnectTimeoutException> { socketTimeout.connectAwait() }
+    }
 
     @Test
     fun `onceAwait returns correctly`() = runBlockingTest {

@@ -9,9 +9,33 @@ import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.suspendCancellableCoroutine
+import java.io.IOException
 import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
+class SocketConnectErrorException : IOException()
+class SocketConnectTimeoutException : IOException()
+
+suspend fun Socket.connectAwait(): Socket {
+    if (connected()) return this
+
+    return suspendCancellableCoroutine { cont ->
+        once(Socket.EVENT_CONNECT) {
+            if (cont.isActive) cont.resume(this)
+        }
+        once(Socket.EVENT_CONNECT_ERROR) {
+            if (cont.isActive) cont.resumeWithException(SocketConnectErrorException())
+        }
+        once(Socket.EVENT_CONNECT_TIMEOUT) {
+            if (cont.isActive) cont.resumeWithException(SocketConnectTimeoutException())
+        }
+
+        connect()
+
+        cont.invokeOnCancellation { disconnect() }
+    }
+}
 
 suspend fun Socket.emitAwait(event: String, vararg args: Any): Array<out Any> =
     suspendCoroutine { cont ->

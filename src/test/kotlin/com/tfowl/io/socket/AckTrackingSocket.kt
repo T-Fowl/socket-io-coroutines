@@ -4,7 +4,7 @@ import io.socket.client.Ack
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
 
-class AckTrackingSocket : Socket(null, null, null) {
+internal class AckTrackingSocket : Socket(null, null, null) {
 
     private var latestAck: Ack? = null
 

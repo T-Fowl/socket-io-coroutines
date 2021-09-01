@@ -14,8 +14,7 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
-class SocketConnectErrorException : IOException()
-class SocketConnectTimeoutException : IOException()
+class SocketIOConnectionException : IOException()
 
 suspend fun Socket.connectAwait(): Socket {
     if (connected()) return this
@@ -25,10 +24,7 @@ suspend fun Socket.connectAwait(): Socket {
             if (cont.isActive) cont.resume(this)
         }
         once(Socket.EVENT_CONNECT_ERROR) {
-            if (cont.isActive) cont.resumeWithException(SocketConnectErrorException())
-        }
-        once(Socket.EVENT_CONNECT_TIMEOUT) {
-            if (cont.isActive) cont.resumeWithException(SocketConnectTimeoutException())
+            if (cont.isActive) cont.resumeWithException(SocketIOConnectionException())
         }
 
         connect()

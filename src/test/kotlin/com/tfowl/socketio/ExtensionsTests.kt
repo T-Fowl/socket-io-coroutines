@@ -20,10 +20,7 @@ class ExtensionsTests {
         assertTrue(connected.connected())
 
         val socketError = ControlledConnectionSocket(ConnectionOutcome.Error)
-        assertThrows<SocketConnectErrorException> { socketError.connectAwait() }
-
-        val socketTimeout = ControlledConnectionSocket(ConnectionOutcome.Timeout)
-        assertThrows<SocketConnectTimeoutException> { socketTimeout.connectAwait() }
+        assertThrows<SocketIOConnectionException> { socketError.connectAwait() }
     }
 
     @Test

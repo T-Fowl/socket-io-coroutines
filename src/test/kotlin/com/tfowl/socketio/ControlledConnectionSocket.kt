@@ -5,7 +5,6 @@ import io.socket.client.Socket
 internal enum class ConnectionOutcome {
     Success,
     Error,
-    Timeout
 }
 
 internal class ControlledConnectionSocket(private val outcome: ConnectionOutcome) :
@@ -28,7 +27,6 @@ internal class ControlledConnectionSocket(private val outcome: ConnectionOutcome
                 emit(EVENT_CONNECT)
             }
             ConnectionOutcome.Error   -> emit(EVENT_CONNECT_ERROR)
-            ConnectionOutcome.Timeout -> emit(EVENT_CONNECT_TIMEOUT)
         }
         return this
     }

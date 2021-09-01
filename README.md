@@ -8,10 +8,36 @@ Simple kotlin coroutine extensions for the socket.io java client library.
 
 ## Usage
 
+Connecting:
 ```kotlin
+try {
+    val connectedSocket = socket.connectAwait()
+} catch(t: SocketIOConnectionException) {
+    
+}
 ``` 
 
+Emitting Events:
+```kotlin
+val result = socket.emitAwait("event_name", arguments())
+```
+
+Listening for one-time events:
+```kotlin
+val result = emitter.onceAwait("event_name")
+```
+
+Events as a flow:
+```kotlin
+emitter.onFlow("event_name")
+    .collect { event -> doStuff(event) }
+```
+
 ## Versions
+
+Library is designed, compiled and tested against `io.socket:socket.io-client:1.0.1`.
+
+Currently there is no guarantee of working on older or newer versions.
 
 ## Download
 

@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalCoroutinesApi::class)
 
-package com.tfowl.io.socket
+package com.tfowl.socketio
 
 import app.cash.turbine.test
 import kotlinx.coroutines.*

@@ -1,4 +1,4 @@
-package com.tfowl.io.socket
+package com.tfowl.socketio
 
 import io.socket.emitter.Emitter
 import org.junit.jupiter.api.Assertions.assertFalse

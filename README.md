@@ -1,7 +1,7 @@
 # socket-io-coroutines
 
 ![Build](https://github.com/T-Fowl/socket-io-coroutines/workflows/Build/badge.svg)
-![Maven Central](https://img.shields.io/maven-central/v/com.tfowl.io.socket/socket-io-coroutines)
+![Maven Central](https://img.shields.io/maven-central/v/com.tfowl.socketio/socket-io-coroutines)
 ![GitHub](https://img.shields.io/github/license/T-Fowl/socket-io-coroutines)
 
 Simple kotlin coroutine extensions for the socket.io java client library.
@@ -23,7 +23,7 @@ Groovy
 repositories {
     mavenCentral()
 }
-implementation "com.tfowl.io.socket:socket-io-coroutines:$socketIoCoroutinesVersion"
+implementation "com.tfowl.socketio:socket-io-coroutines:$socketIoCoroutinesVersion"
 ```
 
 Kotlin DSL
@@ -32,7 +32,7 @@ Kotlin DSL
 repositories {
     mavenCentral()
 }
-implementation("com.tfowl.io.socket:socket-io-coroutines:$socketIoCoroutinesVersion")
+implementation("com.tfowl.socketio:socket-io-coroutines:$socketIoCoroutinesVersion")
 ```
 
 Add a maven dependency to your project:
@@ -40,7 +40,7 @@ Add a maven dependency to your project:
 ```xml
 
 <dependency>
-    <groupId>com.tfowl.io.socket</groupId>
+    <groupId>com.tfowl.socketio</groupId>
     <artifactId>socket-io-coroutines</artifactId>
     <version>${socketIoCoroutinesVersion}</version>
 </dependency>

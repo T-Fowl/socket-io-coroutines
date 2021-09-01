@@ -1,4 +1,4 @@
-package com.tfowl.io.socket
+package com.tfowl.socketio
 
 import io.socket.client.Socket
 import io.socket.emitter.Emitter

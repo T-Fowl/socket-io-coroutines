@@ -4,7 +4,7 @@ plugins {
     kotlin("jvm") version "1.5.30"
 }
 
-group = "com.tfowl.io.socket"
+group = "com.tfowl.socketio"
 version = "1.0-SNAPSHOT"
 
 repositories {

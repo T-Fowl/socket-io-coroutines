@@ -13,7 +13,7 @@ plugins {
 }
 
 group = "com.tfowl.socketio"
-version = "1.0.0"
+version = "1.0.1"
 description = "Kotlin coroutine extensions for the socket.io-client library"
 
 repositories {
@@ -41,6 +41,11 @@ tasks.withType<Test>().all {
         showStandardStreams = true
         exceptionFormat = TestExceptionFormat.FULL
     }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }
 
 tasks.withType<KotlinCompile>() {

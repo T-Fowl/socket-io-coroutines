@@ -25,7 +25,7 @@ dependencies {
         TODO: Use gradle catalog when dependabot supports it
      */
 
-    api("io.socket:socket.io-client:1.0.1")
+    api("io.socket:socket.io-client:2.0.1")
     api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.2")

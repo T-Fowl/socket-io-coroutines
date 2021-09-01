@@ -56,7 +56,10 @@ suspend fun Socket.emitAwait(event: String, vararg args: Any): Array<out Any> =
  */
 suspend fun Emitter.onceAwait(event: String): Array<out Any> {
     return suspendCancellableCoroutine { cont ->
-        val listener: Emitter.Listener = Emitter.Listener { cont.resume(it) }
+        val listener: Emitter.Listener = Emitter.Listener {
+            if (cont.isActive)
+                cont.resume(it)
+        }
         cont.invokeOnCancellation { off(event, listener) }
         once(event, listener)
     }

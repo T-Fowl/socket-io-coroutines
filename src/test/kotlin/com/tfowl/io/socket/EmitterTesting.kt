@@ -1,8 +1,8 @@
 package com.tfowl.io.socket
 
 import io.socket.emitter.Emitter
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 
 internal fun Emitter.assertListening(event: String) {
     assertTrue(hasListeners(event))

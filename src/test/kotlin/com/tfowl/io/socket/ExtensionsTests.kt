@@ -5,9 +5,9 @@ package com.tfowl.io.socket
 import app.cash.turbine.test
 import kotlinx.coroutines.*
 import kotlinx.coroutines.test.runBlockingTest
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Test
 import kotlin.time.ExperimentalTime
 
 class ExtensionsTests {

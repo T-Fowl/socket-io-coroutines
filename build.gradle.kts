@@ -31,7 +31,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.2")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.2")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.1")
-    testImplementation("app.cash.turbine:turbine:0.6.0")
+    testImplementation("app.cash.turbine:turbine:0.9.0")
 }
 
 tasks.withType<Test>().all {
